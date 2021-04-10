@@ -1,47 +1,40 @@
 package com.hemebiotech.analytics;
 
+
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TreeMap;
 
-/**
- * Simple brute force implementation
- *
- */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
-	private String filepath;
-	
-	/**
-	 * 
-	 * @param filepath a full or partial path to file with symptom strings in it, one per line
-	 */
-	public ReadSymptomDataFromFile (String filepath) {
-		this.filepath = filepath;
-	}
-	
-	@Override
-	public List<String> GetSymptoms() {
-		ArrayList<String> result = new ArrayList<String>();
-		
-		if (filepath != null) {
-			try {
-				BufferedReader reader = new BufferedReader (new FileReader(filepath));
-				String line = reader.readLine();
-				
-				while (line != null) {
-					result.add(line);
-					line = reader.readLine();
-				}
-				reader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return result;
-	}
+private String fileName;
 
+	public ReadSymptomDataFromFile(String fileName) {
+		this.fileName = fileName;
+	}
+	/**
+	 * Reader method
+	 * @return
+	 */
+	public TreeMap<String, Integer> getSymptoms() {
+		TreeMap<String, Integer> symptoms = new TreeMap<>();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(this.fileName));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		String line = null;
+
+		try {
+		while((line = reader.readLine()) != null) {
+				symptoms.put(line, symptoms.getOrDefault(line, 0) + 1);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return symptoms;
+	}
 }
