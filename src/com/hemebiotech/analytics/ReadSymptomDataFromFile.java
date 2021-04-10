@@ -30,7 +30,7 @@ private String fileName;
 
 		try {
 		while((line = reader.readLine()) != null) {
-				symptoms.put(line, symptoms.getOrDefault(line, 0) + 1);
+				symptoms.put(line, 0);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
