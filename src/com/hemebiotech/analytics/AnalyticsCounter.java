@@ -14,6 +14,9 @@ public class AnalyticsCounter {
 		ReadSymptomDataFromFile reader = new ReadSymptomDataFromFile("symptoms.txt");
 		TreeMap<String, Integer> resultSymptoms = reader.getSymptoms();
 
+		SymptomsCounter counter = new SymptomsCounter("symptoms.txt");
+		counter.symptomsCounter(resultSymptoms);
+
 		WriterCountSymptoms  writer = new WriterCountSymptoms("result.out");
 		writer.symptomsWriter(resultSymptoms);
 		}
